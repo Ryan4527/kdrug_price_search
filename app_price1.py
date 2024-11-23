@@ -72,5 +72,4 @@ if search_term:
         else:
             st.warning("유효한 문자열 검색어를 입력하세요.")
 
-
 ##
