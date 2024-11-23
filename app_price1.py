@@ -10,7 +10,7 @@ st.header('약가 검색')
 df = pd.read_excel("약가.xlsx")
 
 # 검색어 입력받기
-search_term = st.text_input("성분명 또는 제품명을 입력하세요.")
+search_term = st.text_input("성분명(영문) 또는 제품명을 입력하세요.")
 
 # 검색 기능
 if search_term:
@@ -72,4 +72,3 @@ if search_term:
         else:
             st.warning("유효한 문자열 검색어를 입력하세요.")
 
-#####
