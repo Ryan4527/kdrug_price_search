@@ -71,3 +71,6 @@ if search_term:
                 st.error(f"오류가 발생했습니다: {e}")
         else:
             st.warning("유효한 문자열 검색어를 입력하세요.")
+
+
+##
