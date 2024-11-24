@@ -26,9 +26,7 @@ if search_term:
 
                 # 검색 결과 합치기 및 중복 제거
                 matching_df = pd.concat([matching_code_df, matching_name_df]).drop_duplicates()
-                # column 정리
-                matching_df[['주성분코드','제품코드',]]
-
+                
                 if not matching_df.empty:
                     result_df = matching_df.copy()
                     main_component_codes = matching_df["주성분코드"].unique()
@@ -51,14 +49,17 @@ if search_term:
                         result_df.at[first_matching_index, "최고 상한금액"] = max_price
                         result_df.at[first_matching_index, "최저 상한금액"] = min_price
 
+                    filtered_result_df = result_df[["주성분코드", "제품코드", "같은 주성분코드 개수", "최고 상한금액", "최저 상한금액"]]
+
+
                     # 결과 출력
                     st.success("검색이 완료되었습니다!")
-                    st.write("검색 결과", result_df)
+                    st.write("검색 결과", filtered_result_df)
 
                     # Excel 파일 생성 및 다운로드 버튼 추가
                     output = BytesIO()
                     with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                        result_df.to_excel(writer, index=False)
+                        filtered_result_df.to_excel(writer, index=False)
                     output.seek(0)
 
                     st.download_button(
