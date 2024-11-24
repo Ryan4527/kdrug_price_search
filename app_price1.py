@@ -61,7 +61,7 @@ if search_term:
                     st.download_button(
                         label="검색 결과 다운로드",
                         data=output,
-                        file_name="modified_약가.xlsx",
+                        file_name="성분_약가.xlsx",
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                     )
 
@@ -124,7 +124,7 @@ if search_term:
                     st.download_button(
                         label="검색 결과 다운로드",
                         data=output,
-                        file_name="modified_약가.xlsx",
+                        file_name="제품_약가.xlsx",
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                     )
 
