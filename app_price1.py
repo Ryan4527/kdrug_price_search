@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 from io import BytesIO
+import re
 
 # 페이지 기본 설정
 st.set_page_config(page_title="(TEST)약가 검색", layout="wide")
@@ -31,25 +32,53 @@ if search_term:
                     result_df = matching_df.copy()
                     main_component_codes = matching_df["주성분코드"].unique()
 
+                    result_df['주성분'] = ''
+
                     # 새로운 열 추가
                     result_df["같은 주성분코드 개수"] = 0
                     result_df["최고 상한금액"] = 0
                     result_df["최저 상한금액"] = 0
 
                     # 주성분 코드별 같은 성분 개수, 최고/최저 상한금액 계산
-                    for main_component_code in main_component_codes:
-                        same_code_count = (df['주성분코드'] == main_component_code).sum() - 1
-                        first_matching_index = result_df[result_df['주성분코드'] == main_component_code].index[0]
-                        result_df.at[first_matching_index, "같은 주성분코드 개수"] = same_code_count
+                    # for main_component_code in main_component_codes:
+                    #     same_code_count = (df['주성분코드'] == main_component_code).sum() - 1
+                    #     first_matching_index = result_df[result_df['주성분코드'] == main_component_code].index[0]
+                    #     result_df.at[first_matching_index, "같은 주성분코드 개수"] = same_code_count
 
+                    #     matching_prices = df[df["주성분코드"] == main_component_code]["상한금액"]
+                    #     max_price = matching_prices.max()
+                    #     min_price = matching_prices.min()
+
+                    #     result_df.at[first_matching_index, "최고 상한금액"] = max_price
+                    #     result_df.at[first_matching_index, "최저 상한금액"] = min_price
+
+                    # 주성분 코드별 같은 성분 개수, 최고/최저 상한금액 계산
+                    for main_component_code in main_component_codes:
+                        # 동일한 주성분코드를 가진 전체 '제품코드' 개수 계산 (필터링 없이)
+                        total_same_code_count = df[df["주성분코드"] == main_component_code]["제품코드"].count()
+                        # 동일한 주성분코드를 가진 '제품코드' 추출
+                        matching_products = df[df["주성분코드"] == main_component_code]["제품코드"]
+                        # 영어가 포함된 제품코드만 필터링
+                        filtered_products = matching_products[matching_products.str.contains(r'[A-Za-z]', na=False)].tolist()
+
+                        # matching_products = matching_products[matching_products.str.contains(r'[A-Za-z]', na=False)].tolist()
                         matching_prices = df[df["주성분코드"] == main_component_code]["상한금액"]
+                        
+                        # 같은 주성분코드 개수, 최고/최저 상한금액 계산
+                        # same_code_count = len(matching_products) - 1
                         max_price = matching_prices.max()
                         min_price = matching_prices.min()
 
+                        # 검색된 데이터에 반영
+                        first_matching_index = result_df[result_df['주성분코드'] == main_component_code].index[0]
+                        result_df.at[first_matching_index, "같은 주성분코드 개수"] = total_same_code_count - 1
                         result_df.at[first_matching_index, "최고 상한금액"] = max_price
                         result_df.at[first_matching_index, "최저 상한금액"] = min_price
+                        result_df.at[first_matching_index, "주성분"] = ", ".join(filtered_products)
+                    
 
-                    filtered_result_df = result_df[["주성분코드", "제품코드", "같은 주성분코드 개수", "최고 상한금액", "최저 상한금액"]]
+                    # filtered_result_df = result_df[["주성분코드", "주성분", "제품코드", "같은 주성분코드 개수", "최고 상한금액", "최저 상한금액"]]
+                    filtered_result_df = result_df[["주성분코드", "주성분", "같은 주성분코드 개수", "최고 상한금액", "최저 상한금액"]]
 
 
                     # 결과 출력
