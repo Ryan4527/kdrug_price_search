@@ -5,6 +5,7 @@ from io import BytesIO
 # 페이지 기본 설정
 st.set_page_config(page_title="(TEST)약가 검색", layout="wide")
 st.header('약가 검색')
+st.text('해당 성분 혹은 제품의 등재 품목 수와 최고가, 최저가를 알려줍니다.')
 
 # 데이터 파일 읽기
 df = pd.read_excel("약가.xlsx")
