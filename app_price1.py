@@ -37,7 +37,8 @@ if search_term:
                     # 새로운 열 추가
                     result_df["같은 주성분코드 개수"] = 0
                     result_df["최고 상한금액"] = 0
-                    result_df["최저 상한금액"] = 0
+                    # result_df["최저 상한금액"] = 0
+                    result_df["최저 상한금액"] = ''
 
                     # 주성분 코드별 같은 성분 개수, 최고/최저 상한금액 계산
                     # for main_component_code in main_component_codes:
