@@ -26,6 +26,8 @@ if search_term:
 
                 # 검색 결과 합치기 및 중복 제거
                 matching_df = pd.concat([matching_code_df, matching_name_df]).drop_duplicates()
+                # column 정리
+                matching_df[['주성분코드','제품코드',]]
 
                 if not matching_df.empty:
                     result_df = matching_df.copy()
