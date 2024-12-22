@@ -10,7 +10,7 @@ st.header('약가 검색')
 st.text('해당 성분 혹은 제품의 등재 품목 수와 최고가, 최저가를 알려줍니다!')
 
 # 로그 파일 경로
-log_file = "search_log.csv"
+log_file = "search_log.csv" 
 
 # 로그 저장 함수
 def save_log(search_term, search_time):
