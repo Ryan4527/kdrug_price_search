@@ -11,7 +11,9 @@ st.text('해당 성분 혹은 제품의 등재 품목 수와 최고가, 최저�
 
 # 로그 파일 경로
 log_file_term = "search_term_log.csv" 
- 
+# 로그 파일 경로
+log_file_name = "search_name_log.csv" 
+
 # 로그 저장 함수
 def save_log(search_term, search_time):
     # 로그 데이터프레임 생성
@@ -132,8 +134,7 @@ if search_term:
 # 검색어 입력받기
 search_term = st.text_input("제품명을 입력하세요.")
 
-# 로그 파일 경로
-log_file_name = "search_name_log.csv" 
+
  
 # 로그 저장 함수
 def save_log(search_term, search_time):
@@ -151,6 +152,10 @@ def save_log(search_term, search_time):
     log_data.to_csv(log_file_name, index=False, encoding="utf-8-sig")
 # 검색 기능
 if search_term:
+    # 현재 시간 기록
+    search_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # 검색어와 시간 로그 저장
+    save_log(search_term, search_time)
     # Spinner 적용
     with st.spinner('검색 중입니다...'):
         # 입력 값이 문자열인지 확인
