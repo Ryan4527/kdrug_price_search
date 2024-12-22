@@ -10,7 +10,7 @@ st.header('약가 검색')
 st.text('해당 성분 혹은 제품의 등재 품목 수와 최고가, 최저가를 알려줍니다!')
 
 # 로그 파일 경로
-log_file = "search_log.csv" 
+log_file_term = "search_term_log.csv" 
  
 # 로그 저장 함수
 def save_log(search_term, search_time):
@@ -19,13 +19,13 @@ def save_log(search_term, search_time):
 
     # 기존 로그가 있으면 불러오기
     try:
-        existing_logs = pd.read_csv(log_file)
+        existing_logs = pd.read_csv(log_file_term)
         log_data = pd.concat([existing_logs, log_data], ignore_index=True)
     except FileNotFoundError:
         pass  # 파일이 없는 경우 새로 생성
 
     # 로그 저장
-    log_data.to_csv(log_file, index=False, encoding="utf-8-sig")
+    log_data.to_csv(log_file_term, index=False, encoding="utf-8-sig")
 
 # 데이터 파일 읽기
 df = pd.read_excel("약가.xlsx")
@@ -132,6 +132,23 @@ if search_term:
 # 검색어 입력받기
 search_term = st.text_input("제품명을 입력하세요.")
 
+# 로그 파일 경로
+log_file_name = "search_name_log.csv" 
+ 
+# 로그 저장 함수
+def save_log(search_term, search_time):
+    # 로그 데이터프레임 생성
+    log_data = pd.DataFrame([[search_term, search_time]], columns=["검색어", "검색시간"])
+
+    # 기존 로그가 있으면 불러오기
+    try:
+        existing_logs = pd.read_csv(log_file_name)
+        log_data = pd.concat([existing_logs, log_data], ignore_index=True)
+    except FileNotFoundError:
+        pass  # 파일이 없는 경우 새로 생성
+
+    # 로그 저장
+    log_data.to_csv(log_file_name, index=False, encoding="utf-8-sig")
 # 검색 기능
 if search_term:
     # Spinner 적용
