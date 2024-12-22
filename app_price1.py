@@ -11,7 +11,7 @@ st.text('해당 성분 혹은 제품의 등재 품목 수와 최고가, 최저�
 
 # 로그 파일 경로
 log_file = "search_log.csv" 
-
+ 
 # 로그 저장 함수
 def save_log(search_term, search_time):
     # 로그 데이터프레임 생성
