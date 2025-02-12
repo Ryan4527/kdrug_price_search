@@ -33,7 +33,7 @@ def save_log(search_term, search_time):
 df = pd.read_excel("약가.xlsx")
 
 # 검색어 입력받기
-search_term = st.text_input("성분명(소문자 영문)을 입력하세요.")
+search_term = st.text_input("성분명(영문)을 입력하세요.")
 
 # 검색어 소문자로 자동 변경
 search_term = search_term.lower() if search_term else ""
